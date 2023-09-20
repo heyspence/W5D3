@@ -1,7 +1,8 @@
 require 'sqlite3'
 require 'singleton'
+require 'byebug'
 
-class QuestionsDatabase < sqlite3::Database
+class QuestionsDatabase < SQLite3::Database
     include Singleton
 
     def initialize
@@ -12,16 +13,29 @@ class QuestionsDatabase < sqlite3::Database
 end
 
 class Question
-    class self.all
-        data= QuestionsDatabase.instance.execute('SELECT * FROM questions')
-        data.map do {|ele|Question.new(ele)}
-
+    def self.all
+        data = QuestionsDatabase.instance.execute('SELECT * FROM questions;')
+        data.map { |ele| Question.new(ele) }
     end
+
+    def self.find_by_id(id)
+        question = QuestionsDatabase.instance.execute(<<-SQL, id)
+        SELECT 
+            * 
+        FROM 
+            questions 
+        WHERE 
+            id = ?
+        SQL
+
+        question.map { |ele| self.new(ele) }
+    end
+
     def initialize(arg)
-        id=arg['id']
-        title=arg['title']
-        body=arg['body']
-        author_id=arg['author_id']
+        @id = arg['id']
+        @title = arg['title']
+        @body = arg['body']
+        @author_id = arg['author_id']
     end
 end
-table1=QuestionsDatabase.new
+
