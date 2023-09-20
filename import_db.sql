@@ -55,19 +55,23 @@ CREATE TABLE question_likes(
 );
 
 
-INSERT INTO users(fname, lname)
-Values('Stephen', 'Chao')
-INSERT INTO users(fname, lname)
-Values('Spencer', 'Heywood')
-INSERT INTO users(fname, lname)
-Values('Amin', 'Babar')
+INSERT INTO 
+    users (fname, lname)
+VALUES
+    ('Stephen', 'Chao'),
+    ('Spencer', 'Heywood'),
+    ('Amin', 'Babar');
 
-INSERT INTO questions(title, body, author_id)
-Values('new_question','I have a question',1)
-Values('next_question','What to eat',2)
-Values('final_question','How to get to Penn station',3)
+INSERT INTO 
+    questions (title, body, author_id)
+VALUES
+    ('new_question','I have a question',1),
+    ('next_question','What to eat',2),
+    ('final_question','How to get to Penn station',3);
 
-INSERT INTO replies(questions_id,parent_reply_id,body,users_id)
-Values(1,NULL,'How can I help you',1)
-Values(2,NULL,'Pizza',2)
-Values(3,NULL,'follow the yellow brick road',3)
+INSERT INTO 
+    replies (questions_id,parent_reply_id,body,users_id)
+VALUES
+    (1,NULL,'How can I help you',1),
+    (2,NULL,'Pizza',2),
+    (3,NULL,'follow the yellow brick road',3);
