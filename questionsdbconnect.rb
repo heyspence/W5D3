@@ -95,5 +95,25 @@ class Reply
         @body = data['body']
         @users_id = data['users_id']
     end
+    def self.find_by_user_id(user_id)
+        reply=QuestionsDatabase.instance.execute(<<-SQL,user_id)
+        SELECT
+            *
+        FROM
+            replies
+        WHERE
+            users_id=?
+        SQL
+    end
+    def self.find_by_question_id(question_id)
+        replies = QuestionsDatabase.instance.execute(<<-SQL,question_id)
+        SELECT
+            *
+        FROM
+            replies
+        WHERE
+            questions_id=?
+        SQL
+    end
 end
 
