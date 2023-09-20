@@ -38,4 +38,30 @@ class Question
         @author_id = arg['author_id']
     end
 end
+class Users
+    def self.all
+        data = QuestionsDatabase.instance.execute('SELECT * FROM users;')
+        data.map {|ele| Users.new(ele)}
+    end
+    def self.find_by_name(fname,lname)
+        user=QuestionsDatabase.instance.execute(<<-SQL, fname,lname)
+        SELECT
+            *
+        FROM
+            users
+        WHERE
+            fname = ?
+        AND lname = ?
+        SQL
+        user.map { |ele| self.new(ele) }
+    end
+
+    def initialize(arg)
+        @id=arg['id']
+        @fname=arg['fname']
+        @lname=arg['lname']
+    end
+end
+
+
 
